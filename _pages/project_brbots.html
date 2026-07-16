@@ -1,0 +1,250 @@
+---
+layout: null
+permalink: /projects/brbots/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BRBOTS: A Real-Time Gait-Driven 18-DoF Humanoid Biped Robot</title>
+  <meta name="description" content="BRBOTS: A Real-Time Gait-Driven 18-DoF Humanoid Biped Robot — BUAA Robotics Team">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚶</text></svg>">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="{{ '/assets/css/project.css' | relative_url }}">
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="hero-layout" style="display:block;">
+        <div class="hero-content" style="text-align:center;">
+
+          <span class="conference-badge">BUAA Robotics Team · 2020 – 2023</span>
+
+          <h1 class="title is-2 publication-title">
+            BRBOTS: A Real-Time Gait-Driven 18-DoF Humanoid Biped Robot
+          </h1>
+
+          <div class="publication-authors">
+            <span class="author-block"><a href="https://noietch.github.io/" target="_blank">Heqing Yang</a><sup>*</sup></span>
+            <span class="author-block">and the BUAA Robotics Team</span>
+          </div>
+
+          <div class="affiliations mt-2">
+            <sup>*</sup>Team leader across two hardware iterations · Beihang University
+          </div>
+
+          <div class="publication-links mt-4">
+            <a class="button is-dark is-medium" href="{{ '/' | relative_url }}">
+              <span class="icon"><i class="fas fa-arrow-left"></i></span>
+              <span>Back</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section tldr-section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">TL;DR</h2>
+    <p class="tldr-text">
+      An <b>18-DoF humanoid biped</b> built end-to-end by the BUAA Robotics Team across <b>two hardware iterations</b> — mechanical design, embedded electronics, ROS control stack, an improved 3D-LIPM gait planner, and a particle-filter visual-localization module that corrects gait-odometry drift. <b>2nd Prize (top-4), RoboCup Asia-Pacific Championship</b>. This project led directly to my direct-entry Ph.D. offer.
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Video</h2>
+    <div class="figure-container">
+      <video autoplay loop muted playsinline preload="auto" style="width:100%;max-width:640px;display:block;margin:0 auto;">
+        <source src="{{ '/assets/video/brbots.mp4' | relative_url }}" type="video/mp4">
+      </video>
+      <p class="figure-caption">
+        <b>Walking gait test (left)</b> with real-time trunk / flying-foot trajectory tracking, and <b>RViz visualization (right)</b> showing the 18-DoF joint state stream from onboard IMU + encoders.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Overview</h2>
+    <div class="abstract-content">
+      <p>
+        Humanoid bipeds can operate in the unstructured environments where humans live — service, medical, emergency-response. Existing platforms, however, remain limited in <b>interactivity</b> and in <b>adaptation to environmental change</b>, and their ability to complete tasks in complex environments is still lacking. BRBOTS addresses these bottlenecks with a fully in-house design across the entire stack.
+      </p>
+      <p>
+        The BRBOTS system integrates: (i) a <b>decision-tree-based behavior management system</b>; (ii) an <b>online gait generator</b> based on an improved 3D inverted-pendulum model; (iii) a <b>vision and self-localization system</b> combining YOLO-based object detection with particle-filter localization; and (iv) the underlying <b>mechanical design</b> of the head, torso, and lower body.
+      </p>
+    </div>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/brbots_model.png' | relative_url }}" alt="BRBOTS robot model" loading="lazy">
+      <p class="figure-caption">
+        <b>BRBOTS mechanical design.</b> 18 degrees of freedom distributed across head, torso, arms, and lower body, designed to meet the requirements of stable bipedal walking and onboard autonomy.
+      </p>
+    </div>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/brbots_physical.png' | relative_url }}" alt="BRBOTS physical robot" loading="lazy">
+      <p class="figure-caption">
+        The physical robot after assembly.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Mechanical design</h2>
+    <p class="summary-text">
+      Two full hardware generations — head, torso, arms and lower-body designed around <b>18 degrees of freedom</b> with careful hardware selection to balance payload, backlash, and cost. Arms carry two same-axis DoFs for elbow bending and shoulder lifting, mainly used to protect the robot during falls.
+    </p>
+    <div class="figure-container narrow">
+      <img src="{{ '/assets/img/projects/brbots_upper.png' | relative_url }}" alt="Upper body" loading="lazy">
+      <p class="figure-caption">
+        Upper body of BRBOTS — torso, arms, and camera-carrying head.
+      </p>
+    </div>
+    <div class="figure-container narrow">
+      <img src="{{ '/assets/img/projects/brbots_lower.png' | relative_url }}" alt="Lower body" loading="lazy">
+      <p class="figure-caption">
+        Lower body — hip, knee, and ankle assemblies that drive the biped gait.
+      </p>
+    </div>
+    <div class="figure-container narrow">
+      <img src="{{ '/assets/img/projects/brbots_feet.png' | relative_url }}" alt="Feet" loading="lazy">
+      <p class="figure-caption">
+        Foot design providing the ground-contact footprint needed for stable single-support-phase balancing.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Behavior management</h2>
+    <p class="summary-text">
+      A <b>decision-tree-based behavior manager</b> orchestrates high-level task logic. The system includes a graphical editor for behavior trees, live visualization for runtime monitoring, and an extension mechanism for automatic tree construction from task specifications. The example below shows a local subtree of the soccer-playing controller.
+    </p>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/brbots_behavior_tree.png' | relative_url }}" alt="Behavior tree structure" loading="lazy">
+      <p class="figure-caption">
+        Local structure of the BRBOTS behavior tree — the robot chooses actions from match control signals, vision inputs, and environment perception.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Gait control</h2>
+    <p class="summary-text">
+      For motion planning we use a simplified kinematic model that captures joint / link coupling without the mechanical detail of the CAD model, and a <b>3D linear inverted pendulum</b> model on top for real-time gait generation.
+    </p>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/brbots_kinematics.png' | relative_url }}" alt="Kinematic simplified model" loading="lazy">
+      <p class="figure-caption">
+        Simplified kinematic model used for online planning.
+      </p>
+    </div>
+    <div class="figure-container narrow">
+      <img src="{{ '/assets/img/projects/brbots_lipm.png' | relative_url }}" alt="Linear inverted pendulum" loading="lazy">
+      <p class="figure-caption">
+        Linear inverted-pendulum model driving the gait engine.
+      </p>
+    </div>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/brbots_ros.png' | relative_url }}" alt="ROS motion control system" loading="lazy">
+      <p class="figure-caption">
+        ROS-based motion control system — the gait engine talks to the low-level joint controllers, closed by IMU + encoder feedback.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Vision &amp; self-localization</h2>
+    <p class="summary-text">
+      The perception stack is designed around the RoboCup soccer-field setting. A modified <b>YOLOv5</b> object detector with a segmentation head recognises the ball and segments the white field lines from the grass background. The segmented white-line point cloud, together with wheel/gait odometry, feeds a <b>particle-filter self-localizer</b> that estimates the robot's pose on the field at <b>20 Hz</b>.
+    </p>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/brbots_vision.png' | relative_url }}" alt="Semantic segmentation of the field" loading="lazy">
+      <p class="figure-caption">
+        Semantic segmentation of the field — the vision system parses the ball and the white line landmarks that anchor the particle-filter localizer.
+      </p>
+    </div>
+
+    <h3 class="summary-heading" style="margin-top:1.5rem;">Particle-filter localizer</h3>
+    <p class="summary-text">
+      A monocular camera on the robot supplies the white-line point cloud; the particle filter uses these together with the odometry stream. Because the soccer-field environment is non-linear and non-Gaussian, particle filtering fits better than an EKF for state estimation. The pipeline is a standard sample → predict → weight → resample loop, and the final pose estimate is taken as the centroid of the particle swarm.
+    </p>
+    <p class="summary-text">
+      <b>Particle initialization &amp; prediction.</b> Starting from a known initial pose, we seed particles by adding Gaussian noise so that the filter converges quickly. During prediction, each particle propagates according to the odometry output, the odometry noise, and the covariance of the displacement.
+    </p>
+    <p class="summary-text">
+      <b>Weighting.</b> Directly matching every visible line-segment point to specific labelled features on the field is too slow to sustain a 20 Hz update. Instead, we (i) transform the visible white-line point cloud into each particle's frame, (ii) look up per-pixel weights from a pre-computed <b>distance-to-nearest-white-line</b> map of the field, (iii) sum the weights over all points, and (iv) normalize across particles. The two figures below show the raw field map (drawn at 1 px : 1 cm) and its blurred distance-map version used for weighting.
+    </p>
+    <div class="figure-container narrow">
+      <img src="{{ '/assets/img/projects/brbots_field.png' | relative_url }}" alt="Field map" loading="lazy">
+      <p class="figure-caption">
+        Raw field map, drawn at 1 px : 1 cm scale.
+      </p>
+    </div>
+    <div class="figure-container narrow">
+      <img src="{{ '/assets/img/projects/brbots_field_blur.png' | relative_url }}" alt="Blurred field map used for particle weighting" loading="lazy">
+      <p class="figure-caption">
+        Distance-to-nearest-white-line map used as the particle weighting image — brighter pixels sit on/near a line.
+      </p>
+    </div>
+    <p class="summary-text">
+      <b>Resampling.</b> Importance resampling at <b>10 Hz</b> (half the filter rate) empirically balances performance and localization quality; running resampling at every update instead was measurably more expensive without noticeably better estimates.
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Results</h2>
+    <p class="summary-text">
+      BRBOTS won <b>2nd Prize (top-4 in China)</b> at the RoboCup Asia-Pacific Championship — the best result in the BUAA Robotics Team's history at the time. The project led directly to my direct-entry Ph.D. offer.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content">
+      <p>
+        Website template borrowed from <a href="https://kdwonn.github.io/CompACT/" target="_blank">CompACT</a>, which borrows from <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+          
+          <div class="experiences">
+            <h2>Experience</h2>
+            {% if site.experiences != blank -%}
+            <div class="table-responsive">
+              <table class="table table-sm table-borderless">
+              {%- assign experiences = site.experiences | reverse -%}
+              {% for item in experiences limit: site.experiences_limit %}
+                <tr>
+                  <th scope="row" class="when">
+                    {% if item.start_end %}
+                      {{ item.start_end }}
+                    {% else %}
+                      {% if item.start %}{{ item.start }}{% endif %}{% if item.end %} &ndash; {{ item.end }}{% endif %}
+                    {% endif %}
+                  </th>
+                  <td>
+                    {% if item.inline -%}
+                      <strong>{{ item.title }}</strong>{% if item.institution or item.location %} &middot; {% if item.institution %}{% assign inst_slug = item.institution | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: ',', '' %}<span class="brand-{{ inst_slug }}">{{ item.institution }}</span>{% endif %}{% if item.location %}, {{ item.location }}{% endif %}{% endif %}<br/>
+                      <div class="muted">{{ item.content | remove: '<p>' | remove: '</p>' | emojify }}</div>
+                    {%- else -%}
+                      <a class="experience-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+                    {%- endif %}
+                  </td>
+                </tr>
+              {%- endfor %}
+              </table>
+            </div>
+          {%- else -%}
+            <p>No experience so far...</p>
+          {%- endif %}
+          </div>

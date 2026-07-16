@@ -1,0 +1,83 @@
+- title: Basics
+  type: map
+  contents:
+    - name: Full Name
+      value: Heqing Yang
+    - name: Affiliation
+      value: School of Artificial Intelligence, Beihang University
+    - name: Advisor
+      value: Prof. Si Liu (co-advisor Prof. Linjiang Huang)
+    - name: Email
+      value: yangheqing@buaa.edu.cn
+    - name: Location
+      value: Beijing, China
+
+- title: Education
+  type: time_table
+  contents:
+    - title: Ph.D. in Artificial Intelligence
+      institution: Beihang University, Beijing
+      year: 2024 – Present
+      description:
+        - Advised by Prof. Si Liu; co-advised by Prof. Linjiang Huang.
+    - title: B.S. in Software Engineering
+      institution: Beihang University, Beijing
+      year: 2019 – 2024
+      description:
+        - GPA 3.93/4.0 (rank 8/187).
+
+- title: Experience
+  type: time_table
+  contents:
+    - title: Research Intern
+      institution: Meituan LongCat Team
+      year: 2025.10 – present
+      description:
+        - Robot foundation models.
+    - title: Research Intern
+      institution: BIGAI (Beijing Institute for General Artificial Intelligence)
+      year: 2024.03 – 2025.01
+      description:
+        - Long-horizon robot task planning on 3D scene graphs — first-author ICRA 2026 submission (EPoG).
+    - title: Team Leader — BRBOTS humanoid biped project
+      institution: BUAA Robotics Team
+      year: 2020.12 – 2023.09
+      description:
+        - 18-DoF humanoid biped built end-to-end across two hardware iterations (mechanical, electronics, firmware, software).
+        - 2nd Prize (top-4), RoboCup Asia-Pacific Championship.
+
+- title: Selected Projects
+  type: nested_list
+  contents:
+    - title: EPoG — Long-horizon task planner on 3D scene graphs
+      items:
+        - Graph-edit planner with LLM-guided heuristic that fuses task- and motion-level reasoning; 91.3% success rate on 5 long-horizon transport tasks across 46 ProcThor-10k scenes.
+        - Validated on a physical mobile manipulator handling unknown object states and runtime exceptions in real, dynamic environments.
+    - title: CR-Solver — GPU-accelerated kinematics for continuum robots
+      items:
+        - Unified nonlinear-optimization framework for IK, path following, and trajectory planning; pure Python/JAX with GPU parallelism.
+        - "> 95% success rate with millimeter-level accuracy."
+    - title: EVA-Client — Unified framework for deployment, evaluation, and data collection on real robots
+      items:
+        - One policy, any robot — a smooth all-in-one real-robot stack. Debug, record, evaluate, and visualize entirely in the browser.
+        - Drives an AgileX bimanual arm end-to-end (teleop → record → π₀ checkpoint → smooth async deploy) on real hardware.
+    - title: BRBOTS — 18-DoF humanoid biped robot
+      items:
+        - Team leader across two hardware iterations; hardware, electronics, firmware, ROS stack, gait planner, particle-filter visual localization.
+        - 2nd Prize (top-4), RoboCup Asia-Pacific Championship.
+
+- title: Awards
+  type: list
+  contents:
+    - "<b>2nd place (2/62)</b>, RoCo Challenge @ AAAI 2026, 2026"
+    - "<b>1st Prize</b>, RoboCon, 2021 & 2022"
+    - "<b>2nd Prize (top-4)</b>, RoboCup Asia-Pacific Championship, 2021"
+    - "<b>Finalist</b>, U.S. MCM/ICM Mathematical Contest in Modeling, 2021"
+
+- title: Research Interests
+  type: list
+  contents:
+    - Embodied AI · Robot task and motion planning
+    - Open-vocabulary perception
+    - Continuum / soft-robot kinematics
+    - Active perception for legged robots

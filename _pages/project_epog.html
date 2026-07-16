@@ -1,0 +1,244 @@
+---
+layout: null
+permalink: /projects/epog/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EPoG: Integrated Exploration and Sequential Manipulation on Scene Graph</title>
+  <meta name="description" content="EPoG: Integrated Exploration and Sequential Manipulation on Scene Graph with LLM-based Situated Replanning (ICRA 2026)">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="{{ '/assets/css/project.css' | relative_url }}">
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="hero-layout" style="display:block;">
+        <div class="hero-content" style="text-align:center;">
+
+          <span class="conference-badge">ICRA 2026</span>
+
+          <h1 class="title is-2 publication-title">
+            EPoG: Integrated Exploration and Sequential Manipulation on Scene Graph with LLM-based Situated Replanning
+          </h1>
+
+          <div class="publication-authors">
+            <span class="author-block"><a href="https://noietch.github.io/" target="_blank">Heqing Yang</a><sup>1,2</sup>,</span>
+            <span class="author-block"><a>Ziyuan Jiao</a><sup>2</sup>,</span>
+            <span class="author-block"><a>Shu Wang</a><sup>2</sup>,</span>
+            <span class="author-block"><a>Yida Niu</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=-QtVtNEAAAAJ" target="_blank">Si Liu</a><sup>1</sup>,</span>
+            <span class="author-block"><a>Hangxin Liu</a><sup>2</sup></span>
+          </div>
+
+          <div class="affiliations mt-2">
+            <sup>1</sup>Beihang University &nbsp;&nbsp;
+            <sup>2</sup>BIGAI
+          </div>
+
+          <div class="publication-links mt-4">
+            <a class="button is-medium" href="{{ '/' | relative_url }}">
+              <span class="icon"><i class="fas fa-arrow-left"></i></span>
+              <span>Back</span>
+            </a>
+            <a class="button is-dark is-medium" href="https://arxiv.org/abs/2602.04419" target="_blank">
+              <span class="icon"><i class="fas fa-book"></i></span>
+              <span>arXiv</span>
+            </a>
+            <a class="button is-medium" href="https://github.com/buaa-colalab/EPoG" target="_blank">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TL;DR -->
+<section class="section tldr-section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">TL;DR</h2>
+    <p class="tldr-text">
+      A bilevel task planner that maintains an <b>LLM-augmented belief graph</b> over partially observed scenes, computing action sequences via <b>graph edit operations</b> and replanning on the fly. <b>91.3% success</b> and <b>36.1% shorter travel distance</b> across 46 ProcThor-10k household scenes, validated on a real mobile manipulator.
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Video -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Video</h2>
+    <div class="figure-container">
+      <video autoplay loop muted playsinline preload="auto" style="width:100%;max-width:720px;display:block;margin:0 auto;">
+        <source src="{{ '/assets/video/sg_planner_hd.mp4' | relative_url }}" type="video/mp4">
+      </video>
+      <p class="figure-caption">
+        <b>Task 1 — Plan with unknown object state.</b> The robot is asked to place a cabbage and a cup into a basket on a coffee table. The global planner updates its belief graph via an LLM to locate the missing cup and complete the task.
+        <b>Task 2 — Exception handling.</b> The robot retrieves a tissue box from a closet and places it on a coaster. The local planner handles inaccessibility (opening a closed closet), blocking, and potential collisions (temporarily moving a cup and a tea can out of the way).
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Abstract</h2>
+    <div class="abstract-content">
+      <p>
+        In partially known environments, robots must combine exploration to gather information with task planning for efficient execution. To address this challenge, we propose <b>EPoG</b>, an <b>E</b>xploration-based sequential manipulation <b>P</b>lanning framework <b>o</b>n Scene <b>G</b>raphs.
+        EPoG integrates a graph-based global planner with an LLM-based situated local planner, continuously updating a belief graph using observations and LLM predictions to represent known and unknown objects.
+        Action sequences are generated by computing graph edit operations between the goal and belief graphs, ordered by temporal dependencies and movement costs. This approach seamlessly combines exploration and sequential manipulation planning.
+        In ablation studies across 46 realistic household scenes and 5 long-horizon daily object transportation tasks, EPoG achieved a success rate of <b>91.3%</b>, reducing travel distance by <b>36.1%</b> on average.
+        A physical mobile manipulator successfully executed complex tasks in unknown and dynamic environments, demonstrating EPoG's potential for real-world applications.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Introduction: fig1 motivation, fig2 framework -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Introduction</h2>
+    <p class="summary-text">
+      Real-world deployment violates the two comfortable assumptions of existing scene-graph planners: complete prior knowledge, and a static environment. A robot has to interleave information gathering with task planning, which introduces three coupled challenges — locating task-relevant objects under partial observability, trading off exploration and manipulation cost, and reasoning under uncertainty to produce situated, executable plans.
+    </p>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/epog_motivation.png' | relative_url }}" alt="EPoG motivation" loading="lazy">
+      <p class="figure-caption">
+        <b>An example illustrating the challenges of integrating exploration and sequential manipulation:</b> (a) Robots must prioritize potential exploration locations and balance exploration with manipulation tasks to execute efficiently. (b) The robot needs to engage in situated planning to handle unexpected situations.
+      </p>
+    </div>
+    <p class="summary-text">
+      To address these challenges, we propose EPoG, a framework that integrates <b>E</b>xploration and sequential manipulation <b>P</b>lanning <b>o</b>n Scene <b>G</b>raphs. EPoG adopts a bilevel planning architecture for partially observed environments, leveraging pretrained LLMs for informed exploration and situated replanning.
+    </p>
+    <div class="figure-container wide">
+      <img src="{{ '/assets/img/projects/epog_framework.png' | relative_url }}" alt="EPoG framework" loading="lazy">
+      <p class="figure-caption">
+        <b>Overview of the proposed EPoG framework.</b> In the global planner, the belief graph is updated by estimating the locations of target objects present in the goal graph but missing in the initial graph, using new observations and LLM predictions. The action plan is then obtained by performing the topological sort on the graph edit operations between the belief and the goal graph. In the local planner, the LLM generates a situated action sequence to handle exceptions encountered during execution.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Preliminary: fig3 scene graph -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Preliminary</h2>
+    <p class="summary-text">
+      We adopt a graph-based scene representation that models 3D perception with predicate-like attributes, so symbolic action reasoning is grounded in geometric structure while remaining queryable by planning algorithms.
+    </p>
+    <div class="figure-container narrow">
+      <img src="{{ '/assets/img/projects/epog_scene_graph.png' | relative_url }}" alt="Scene graph example" loading="lazy">
+      <p class="figure-caption">
+        An example illustration of an indoor scene.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Method: fig4 motion errors -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Local Replanning</h2>
+    <p class="summary-text">
+      The global planner incrementally builds a belief graph from onboard observations and LLM-based predictions, computes graph edit operations against the goal graph, and generates a candidate action sequence via topological sorting. The robot executes this sequence while continuously updating the belief graph — exploration and manipulation happen in a single closed loop.
+    </p>
+    <p class="summary-text">
+      When execution deviates from the nominal plan, the local planner invokes an LLM for situated replanning. The exceptions we consider in this work:
+    </p>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/epog_motion_error.png' | relative_url }}" alt="Exceptions in motion planning" loading="lazy">
+      <p class="figure-caption">
+        <b>Examples of exceptions in motion planning.</b> (a) <b>Blocking</b>: The robot must avoid collisions with other objects while placing or picking up objects. (b) <b>Inaccessibility</b>: Successful object retrieval or placement within a container requires the container to be opened first. (c) <b>Collision</b>: The robot must ensure that placed objects do not collide with the environment. (d) <b>Instability</b>: The robot must maintain the stability of stacked objects during manipulation; for example, retrieving a book beneath a cup may cause instability.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Experiments: fig6 case study (wide), fig7 exp setup (medium) -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Simulation &amp; Real-World Experiments</h2>
+    <p class="summary-text">
+      We evaluate EPoG on 5 long-horizon object-transport tasks across 46 household scenes from ProcThor-10k. Ablations show that the proposed formulation naturally couples exploration and manipulation, reducing total execution effort; EPoG outperforms purely LLM-based planners on long-horizon tasks; and LLM-guided heuristics plus the low-level planner reduce manual design effort while improving execution efficiency.
+    </p>
+    <div class="figure-container wide">
+      <img src="{{ '/assets/img/projects/epog_case_study.png' | relative_url }}" alt="EPoG case study" loading="lazy">
+      <p class="figure-caption">
+        Illustrations of the robot's paths for two tasks, highlighting key locations and actions.
+      </p>
+    </div>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/epog_exp_setup.png' | relative_url }}" alt="EPoG real-world experiments" loading="lazy">
+      <p class="figure-caption">
+        <b>Real-world experiments.</b> (a) The robot must place three objects (with one unknown object) on a coffee table. (b) The robot must retrieve a tissue box from a closet and place it on a coaster, first removing a cup and a tea can that obstruct task execution. Object states in the closet and on the coffee table are initially unknown.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BibTeX -->
+<section class="section bibtex-section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">BibTeX</h2>
+    <div class="bibtex-block" id="bibtex"><button class="copy-button" onclick="copyBibtex()">Copy</button>@inproceedings{yang2026epog,
+  title     = {EPoG: Integrated Exploration and Sequential Manipulation on Scene Graph with LLM-based Situated Replanning},
+  author    = {Yang, Heqing and Jiao, Ziyuan and Wang, Shu and Niu, Yida and Liu, Si and Liu, Hangxin},
+  booktitle = {IEEE International Conference on Robotics and Automation (ICRA)},
+  year      = {2026}
+}</div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content">
+      <p>
+        Website template borrowed from <a href="https://kdwonn.github.io/CompACT/" target="_blank">CompACT</a>, which borrows from <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function copyBibtex() {
+  const bibtex = document.getElementById('bibtex').innerText;
+  const cleanBibtex = bibtex.replace(/^Copy\n?/, '').trim();
+  navigator.clipboard.writeText(cleanBibtex).then(() => {
+    const btn = document.querySelector('.copy-button');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

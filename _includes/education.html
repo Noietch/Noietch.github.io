@@ -1,0 +1,23 @@
+          
+          <div class="education">
+            <h2>Education</h2>
+            {% if site.education != blank -%}
+              <table class="table table-sm table-borderless">
+              {%- assign education = site.education -%}
+              {% for item in education limit: site.education_limit %}
+                <tr>
+                  <th scope="row" class="when">{{ item.start_end }}</th>
+                  <td>
+                    {% if item.inline -%}
+                      {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
+                    {%- else -%}
+                      <a class="education-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+                    {%- endif %}
+                  </td>
+                </tr>
+              {%- endfor %}
+              </table>
+          {%- else -%} 
+            <p>No education so far...</p>
+          {%- endif %} 
+          </div>

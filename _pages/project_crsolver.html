@@ -1,0 +1,257 @@
+---
+layout: null
+permalink: /projects/crsolver/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CR-Solver: A GPU-Accelerated Kinematics and Motion Solver for Continuum Robots</title>
+  <meta name="description" content="CR-Solver: A GPU-Accelerated Kinematics and Motion Solver for Continuum Robots (IROS 2026)">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="{{ '/assets/css/project.css' | relative_url }}">
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="hero-layout" style="display:block;">
+        <div class="hero-content" style="text-align:center;">
+
+          <span class="conference-badge">IROS 2026</span>
+
+          <h1 class="title is-2 publication-title">
+            CR-Solver: A GPU-Accelerated Kinematics and Motion Solver for Continuum Robots
+          </h1>
+
+          <div class="publication-authors">
+            <span class="author-block"><a href="https://noietch.github.io/" target="_blank">Heqing Yang</a>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=j5rBSw0AAAAJ" target="_blank">Linjiang Huang</a>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=-QtVtNEAAAAJ" target="_blank">Si Liu</a></span>
+          </div>
+
+          <div class="affiliations mt-2">
+            Beihang University
+          </div>
+
+          <div class="publication-links mt-4">
+            <a class="button is-medium" href="{{ '/' | relative_url }}">
+              <span class="icon"><i class="fas fa-arrow-left"></i></span>
+              <span>Back</span>
+            </a>
+            <a class="button is-dark is-medium" href="https://arxiv.org/abs/2607.11340" target="_blank">
+              <span class="icon"><i class="fas fa-book"></i></span>
+              <span>arXiv</span>
+            </a>
+            <a class="button is-medium" href="https://github.com/Noietch/CR-Solver" target="_blank">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TL;DR -->
+<section class="section tldr-section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">TL;DR</h2>
+    <p class="tldr-text">
+      A <b>two-stage nonlinear-optimization</b> solver for tendon-driven continuum robots that unifies inverse kinematics, path following, and trajectory planning in a single constrained optimization formulation. Written in pure Python on JAX with <b>GPU-accelerated parallel optimization</b>, giving significant speedups over CPU-based solvers while maintaining <b>&gt; 95% success</b> and <b>millimeter-level accuracy</b>.
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Demo video -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Demo</h2>
+    <div class="figure-container">
+      <video autoplay loop muted playsinline preload="auto" style="width:100%;max-width:720px;display:block;margin:0 auto;">
+        <source src="{{ '/assets/video/jax_solver_hd.mp4' | relative_url }}" type="video/mp4">
+      </video>
+      <p class="figure-caption">
+        <b>Inverse kinematics under different backbone configurations.</b> CR-Solver seamlessly handles three-section and four-section robots, extensible morphologies, and collision-avoidance constraints in a single optimization framework.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Abstract</h2>
+    <div class="abstract-content">
+      <p>
+        Continuum robots provide intrinsic compliance, high dexterity, and safe physical interaction, enabling navigation and manipulation in confined and unstructured environments. Despite recent advances in sensing and control heightening the need for precise motion generation, most widely used planning libraries are grounded in rigid-body assumptions, creating a critical gap for fast and practical tools for continuum robots.
+        To address this, we present <b>CR-Solver</b>, a two-stage, optimization-based solver for the motion generation of tendon-driven continuum robots. Our method unifies inverse kinematics, path following, and trajectory planning within a single constrained nonlinear optimization framework.
+        Leveraging GPU-accelerated parallel optimization, CR-Solver delivers fast, accurate, and constraint-aware solutions. We validate our approach on three tasks, demonstrating significant speedups over traditional CPU-based solvers while achieving a consistently high success rate above <b>95%</b> and millimeter-level accuracy.
+        The solver is implemented in pure Python, reducing the barrier to adoption and offering a practical, extensible foundation for continuum robots' high-performance motion planning.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Introduction: overview -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Introduction</h2>
+    <p class="summary-text">
+      Continuum robots generate motion through deformation of a continuous backbone — theoretically infinite degrees of freedom. Their intrinsic compliance and slender morphology are perfect for surgery, search-and-rescue, and other confined-space tasks, but the same flexibility makes motion generation computationally demanding. Established rigid-body planners (OMPL, cuRobo, PyRoki) are fundamentally incompatible: they assume URDF-based rigid-link abstractions with discrete joint coordinates, whereas continuum robots have configuration spaces defined by continuous deformation fields.
+    </p>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/crsolver_overview.png' | relative_url }}" alt="CR-Solver overview" loading="lazy">
+      <p class="figure-caption">
+        Our framework provides three core capabilities for continuum robots: (a) inverse kinematics that computes feasible configurations for desired end-effector poses while avoiding obstacles, (b) trajectory planning that generates collision-free trajectories between start and goal configurations, and (c) path following that enables precise tracking of predefined end-effector trajectories. All three functionalities leverage GPU-accelerated parallel optimization for efficient computation.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Preliminary: kinematics -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Kinematics Modeling</h2>
+    <p class="summary-text">
+      We model tendon-driven continuum robots as a chain of piecewise-constant-curvature segments, parameterised by arc length, bending angle, and azimuth.
+    </p>
+    <div class="figure-container medium">
+      <img src="{{ '/assets/img/projects/crsolver_kinematics.png' | relative_url }}" alt="Kinematics model" loading="lazy">
+      <p class="figure-caption">
+        <b>Kinematic model of a single segment in a tendon-driven continuum robot.</b> Left: The segment structure showing the arc length L<sub>i</sub>, bending angle θ<sub>i</sub>, and azimuth angle φ<sub>i</sub> with coordinate frames attached at each disk. Right: Cross-sectional view showing the tendon routing pattern with three tendons symmetrically placed at radius r<sub>c</sub> from the central backbone, with angular spacing α between adjacent tendons.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Method: framework (the big one) -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Methodology</h2>
+    <p class="summary-text">
+      We cast inverse kinematics, path following, and trajectory planning as a single <b>constrained nonlinear optimization</b> — pose error, trajectory smoothness, actuation limits, and collision avoidance are all encoded as differentiable penalties. The core is a GPU-accelerated solver built in pure Python on JAX with JIT compilation and automatic differentiation. A <b>two-stage optimization strategy</b> exploits GPU parallelism to optimize many candidate solutions simultaneously, improving robustness to initialization and reducing susceptibility to local minima.
+    </p>
+    <div class="figure-container wide">
+      <img src="{{ '/assets/img/projects/crsolver_framework.png' | relative_url }}" alt="CR-Solver framework" loading="lazy">
+      <p class="figure-caption">
+        <b>Framework of CR-Solver.</b> We employ a GPU-accelerated two-stage pipeline: Stage I performs massively parallel seed sampling, roadmap searching, and parallel IK to generate diverse feasible initializations; Stage II uses a batched gradient-based solver on a GPU to refine selected candidates, solving inverse kinematics, trajectory planning, and path following under a unified constrained optimization.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Experiments -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">Experiments</h2>
+
+    <div class="summary-section">
+      <h3 class="summary-heading">Inverse Kinematics</h3>
+      <p class="summary-text">
+        CR-Solver achieves nearly 100% success on collision-aware inverse kinematics for continuum robots with varying segment counts, seamlessly handling both non-extendable and extendable configurations.
+      </p>
+      <div class="figure-container medium">
+        <img src="{{ '/assets/img/projects/crsolver_ik_examples.png' | relative_url }}" alt="IK examples" loading="lazy">
+        <p class="figure-caption">
+          Inverse kinematics solutions for non-extendable (left) and extendable (right) robot configurations, demonstrating the solver's capability.
+        </p>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <h3 class="summary-heading">Trajectory Planning</h3>
+      <p class="summary-text">
+        On trajectory planning in cluttered environments, CR-Solver produces smooth, collision-free trajectories while respecting joint limits.
+      </p>
+      <div class="figure-container medium">
+        <img src="{{ '/assets/img/projects/crsolver_mp_examples.png' | relative_url }}" alt="Trajectory planning examples" loading="lazy">
+        <p class="figure-caption">
+          <b>Trajectory planning in cluttered environments.</b> Colored robot configurations depict a single trajectory, visualized every 13 timesteps; the orange curve with an arrow is the corresponding end-effector trace. (a) Random scene with spherical obstacles. (b) Shelf environment, where the trajectory traverses a narrow aisle while satisfying joint-limit and collision-avoidance constraints.
+        </p>
+      </div>
+      <div class="figure-container medium">
+        <img src="{{ '/assets/img/projects/crsolver_tp_result.png' | relative_url }}" alt="Trajectory planning ablation" loading="lazy">
+        <p class="figure-caption">
+          Ablation study on trajectory planning with different initialization strategies.
+        </p>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <h3 class="summary-heading">Path Following</h3>
+      <p class="summary-text">
+        We evaluate constrained path following on ICRA-shaped trajectories, achieving millimeter-level accuracy while avoiding obstacles.
+      </p>
+      <div class="figure-container wide">
+        <img src="{{ '/assets/img/projects/crsolver_combined.png' | relative_url }}" alt="ICRA-shaped path following" loading="lazy">
+        <p class="figure-caption">
+          The results of tracking the ICRA-shaped paths. <b>Top row:</b> the robot traces the letters I, C, R, and A while avoiding obstacles, showing representative configurations along each stroke. <b>Middle row:</b> boxplots of tracking errors for each letter trajectory, including position error (mm, left axis) and rotation error (deg, right axis). <b>Bottom row:</b> evolution of the three driving cable lengths of the first segment during tracking, demonstrating smooth and continuous actuation.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BibTeX -->
+<section class="section bibtex-section">
+  <div class="container is-max-desktop">
+    <h2 class="title section-title">BibTeX</h2>
+    <div class="bibtex-block" id="bibtex"><button class="copy-button" onclick="copyBibtex()">Copy</button>@inproceedings{yang2026crsolver,
+  title     = {A GPU-Accelerated Kinematics and Motion Solver for Continuum Robots},
+  author    = {Yang, Heqing and Huang, Linjiang and Liu, Si},
+  booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year      = {2026}
+}</div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content">
+      <p>
+        Website template borrowed from <a href="https://kdwonn.github.io/CompACT/" target="_blank">CompACT</a>, which borrows from <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function copyBibtex() {
+  const bibtex = document.getElementById('bibtex').innerText;
+  const cleanBibtex = bibtex.replace(/^Copy\n?/, '').trim();
+  navigator.clipboard.writeText(cleanBibtex).then(() => {
+    const btn = document.querySelector('.copy-button');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+---
+layout: default
+---
+
+<!-- about.html -->
+      <div class="post">
+
+        <article>
+          <div class="about-header">
+            <div class="identity">
+              {% if page.profile and page.profile.image -%}
+              <div class="profile">
+                <img src="{{ page.profile.image | prepend: '/assets/img/' | relative_url }}" alt="{{ site.first_name }} {{ site.last_name }}"{% if page.profile.image_circular %} class="rounded-circle"{% endif %}>
+              </div>
+              {%- endif %}
+              <div class="meta">
+                <h1 class="post-title">
+                  {% if site.title == "blank" -%}<span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }} {{ site.last_name }}{%- else -%}{{ site.title }}{%- endif %}
+                </h1>
+                <div class="contact">
+                  {% if page.profile.affiliation -%}
+                    {% if page.profile.affiliation_url -%}
+                      <a href="{{ page.profile.affiliation_url }}">{{ page.profile.affiliation }}</a>
+                    {%- else -%}
+                      {{ page.profile.affiliation }}
+                    {%- endif %}
+                    <br>
+                  {%- endif %}
+                  {% if site.email -%}
+                    <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+                  {%- endif %}
+                </div>
+                {% if page.profile.tagline -%}
+                <div class="tagline">{{ page.profile.tagline }}</div>
+                {%- endif %}
+                {%- if page.social %}
+                <div class="contact-icons">
+                  {% include social.html %}
+                </div>
+                {%- endif %}
+              </div>
+            </div>
+
+            <div class="about-body">
+              {{ content }}
+            </div>
+          </div>
+
+          <!-- News -->
+          {% if page.news and site.announcements.enabled -%}
+            <h2><a href="{{ '/news/' | relative_url }}" style="color: inherit;">News</a></h2>
+            {%- include news.html limit=true %}
+          {%- endif %}
+
+          <!-- Education -->
+          {% if page.education -%}
+          {%- include education.html %}
+          {%- endif %}
+
+          <!-- Experience -->
+          {% if page.experiences -%}
+          {%- include experiences.html %}
+          {%- endif %}
+
+          <!-- All papers -->
+          {% if page.selected_papers -%}
+            <h2><a href="{{ '/projects/' | relative_url }}" style="color: inherit;">Projects</a></h2>
+            {%- include selected_papers.html %}
+          {%- endif %}
+          
+          <!-- Professional services -->
+          {% if page.services -%}
+          {%- include services.html %}
+          {%- endif %}
+          {% if page.honors -%}
+          <!-- Honors and awards -->
+          {%- include honors.html %}
+          {%- endif %}
+          <!-- Latest posts -->
+          <!-- {% if page.latest_posts -%}
+            <h2><a href="{{ '/blog/' | relative_url }}" style="color: inherit;">latest posts</a></h2>
+            {%- include latest_posts.html %}
+          {%- endif %} -->
+
+        </article>
+
+</div>
