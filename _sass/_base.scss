@@ -1391,6 +1391,18 @@ a.brand-meituan-longcat-team {
   &:hover { color: #1b6d31 !important; }
 }
 
+.brand-meituan,
+a.brand-meituan,
+.brand-meituan-robotics-team-and-longcat-team,
+a.brand-meituan-robotics-team-and-longcat-team {
+  color: #FFD100 !important;   /* Meituan yellow */
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: none;
+
+  &:hover { color: #e6bc00 !important; }
+}
+
 .brand-bigai,
 a.brand-bigai,
 .brand-bigai-beijing-institute-for-general-artificial-intelligence,

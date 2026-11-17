@@ -30,10 +30,11 @@
   type: time_table
   contents:
     - title: Research Intern
-      institution: Meituan LongCat Team
+      institution: Meituan Robotics Team & LongCat Team
       year: 2025.10 – present
       description:
         - Robot foundation models.
+        - "Co-author of <a href=\"https://arxiv.org/abs/2611.08577\">Meituan-Robotics-0 (MR0)</a>, a vision-language-action foundation model for desktop manipulation (arXiv 2611.08577)."
     - title: Research Intern
       institution: BIGAI (Beijing Institute for General Artificial Intelligence)
       year: 2024.03 – 2025.01
